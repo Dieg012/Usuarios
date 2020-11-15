@@ -15,7 +15,7 @@
         </header>
         <main>
             <div>
-                <form action="/create/user" method="post">
+                <form action="{{route ('createUser')}}" method="post">
                 @csrf
                     <strong>Nombre: </strong><input type="text" name="name" id="">
                     <strong>e-mail: </strong><input type="email" name="email" id="">

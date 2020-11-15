@@ -15,7 +15,14 @@ use Illuminate\Support\Facades\Route;
 Route::get('/', function(){
     return view('welcome');
 });
+
+//USERS
 Route::get('/signIn', 'registerController@signIn');
 Route::get('/logIn', 'registerController@logIn');
-Route::post('/create/user', 'UserController@createUser');
+Route::post('/create/user', 'UserController@createUser')->name('createUser');
 Route::post('/mainPage', 'UserController@mainPage');
+//Route::get('/mainPage', 'UserController@mainPage');
+
+//TASKS
+Route::get('/task/creator/{id}', 'TaskController@index');
+Route::post('/create/task', 'TaskController@createTask');

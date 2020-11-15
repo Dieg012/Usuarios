@@ -1,3 +1,8 @@
 Laravel development server started: http://127.0.0.1:8000
 [Sat Nov 14 09:30:43 2020] 127.0.0.1:54624 [200]: /favicon.ico
 [Sat Nov 14 15:10:29 2020] 127.0.0.1:55286 [200]: /favicon.ico
+Laravel development server started: http://127.0.0.1:8001
+Laravel development server started: http://127.0.0.1:8000
+Laravel development server started: http://127.0.0.1:8000
+[Sun Nov 15 09:42:03 2020] 127.0.0.1:33648 [404]: /:8000/create/task
+[Sun Nov 15 09:42:35 2020] 127.0.0.1:33650 [404]: /:8000/create/task

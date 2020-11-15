@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\User;
+use App\Models\Task;
 
 class UserController extends Controller
 {
@@ -19,6 +20,30 @@ class UserController extends Controller
             return redirect('/logIn');
         }
     }
+    //USER INFO AND TASKS
+    public function mainPage(Request $request){
+        //GET VALUES FROM DB
+        $userEmail = $this->getEmail($request);
+        $userPass = $this->getPass($request);
+        
+        if($request->email == $userEmail && $request->pass == $userPass){
+            //GET ALL THE INFO FROM THE DB AND PASS TO THE VIEW
+            //$tasks = User::where('email', $request->email)->tasks;
+            $user = User::where('email', $request->email)->get();
+
+            $userId = $this->getId($user);
+            $tasks = User::find($userId)->tasks;
+            return view('mainPage')->with(compact('tasks', 'user'));
+            //return view('mainPage')->with('user', $user)->with('tasks', $tasks);
+        }else{
+            return redirect('/logIn');
+        }
+    }
+
+    /*
+    AUX METHODS
+    */
+    
     public function userExists(Request $request){
         if(User::where('email', $request->get('email'))->exists()){
             return true;
@@ -26,34 +51,21 @@ class UserController extends Controller
             return false;
         }
     }
-    public function getPass($requestedEmail){
-        $userData = User::where('email', $requestedEmail)->get();
+    public function getPass(Request $request){
+        $userData = User::where('email', $request->get('email'))->get();
         foreach($userData as $userPass){
             return $userPass->password;
         }
     }
-    public function getEmail($requestedEmail){
-        $userData = User::where('email', $requestedEmail)->get();
+    public function getEmail(Request $request){
+        $userData = User::where('email', $request->get('email'))->get();
         foreach($userData as $userEmail){
             return $userEmail->email;
         }
     }
-
-    public function mainPage(Request $request){
-        //GET VALUES FROM FORM
-        $requestedEmail = $request->get('email');
-        $requestedPass = $request->get('pass');
-        //GET VALUES FROM DB
-        $userEmail = $this->getEmail($requestedEmail);
-        $userPass = $this->getPass($requestedEmail);
-        
-        if($requestedEmail == $userEmail && $requestedPass == $userPass){
-            //GET ALL THE INFO FROM THE DB AND PASS TO THE VIEW
-            $user = User::where('email', $requestedEmail)->get();
-            return view('mainPage', ['user' => $user]);
-        }else{
-            return redirect('/logIn');
+    public function getId($user){
+        foreach($user as $userData){
+            return $userData->id;
         }
-        
     }
 }
